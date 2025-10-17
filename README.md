@@ -23,3 +23,11 @@ git push
 (ssh-add --apple-use-keychain ~/xcode)
 (chmod 600 ~/xcode)
 (sudo rm -r ~/xcode)
+
+
+IOS
+Add the key: App Transport Security Settings (this may auto-complete).
+
+Expand this new setting.
+
+Click the + button next to it and add the key: Allow Arbitrary Loads to YES.

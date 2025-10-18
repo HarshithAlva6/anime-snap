@@ -22,13 +22,13 @@ class Movie(Anime):
     def __str__(self):
         return f"Movie(id={self.id}, title={self.title}, director={self.director}, duration={self.duration} mins, score={self.score})"
 
-class AnimeEntry(BaseModel):
+class Entry(BaseModel):
     mal_id: int
     title: str
     image_url: str
     url: str
 
-class AnimeRecommendation(BaseModel):
-    entries: list[AnimeEntry]
+class Recommendation(BaseModel):
+    entries: list[Entry]
     content: str
-    user: str
+    user: dict

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class RecViewModel: ObservableObject {
     
     // ⭐️ Published property now holds the complex array of recommendation items
@@ -19,39 +20,35 @@ final class RecViewModel: ObservableObject {
     private let apiEndpoint = URL(string: "http://127.0.0.1:8000/recommendations/anime")!
     
     func fetchRecommendations() {
-        self.isLoading = true
-        self.error = nil
-        self.recommendationItems = [] // Reset the list
-        
-        // This is a simple GET request
-        URLSession.shared.dataTask(with: self.apiEndpoint) { [weak self] data, response, error in
+        guard !isLoading else { return }
+        Task {
+            self.isLoading = true
+            self.error = nil
             
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                self.isLoading = false
+            // 2. Guarantee cleanup
+            defer { self.isLoading = false }
+            
+            do {
+                // 3. Use the modern async URLSession API
+                let (data, response) = try await URLSession.shared.data(from: self.apiEndpoint)
                 
-                if let error = error {
-                    self.error = error
-                    return
-                }
-
-                guard let data = data else {
-                    self.error = NSError(domain: "AppError", code: 2, userInfo: [NSLocalizedDescriptionKey: "No data received for recommendations."])
-                    return
+                // Optional: Check HTTP status code
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw NSError(domain: "NetworkError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid server response."])
                 }
                 
-                // ⭐️ Decode into the top-level container: RecommendationResponse
-                do {
-                    let container = try JSONDecoder().decode(RecommendationResponse.self, from: data)
-                    
-                    // Assign the nested array to the published property
-                    self.recommendationItems = container.recommendations
-                    
-                } catch {
-                    self.error = error
-                    print("Recommendation Decoding failed: \(error)")
-                }
+                // 4. Decode data
+                let container = try JSONDecoder().decode(RecommendationResponse.self, from: data)
+                
+                // 5. Update success state
+                self.recommendationItems = container.recommendations
+                self.error = nil
+                
+            } catch {
+                // 6. Update failure state
+                self.error = error
+                print("Fetch or Decoding failed: \(error)")
             }
-        }.resume()
+        }
     }
 }

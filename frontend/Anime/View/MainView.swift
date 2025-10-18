@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 30) {
                 Text("Welcome to MyAnimeList")
                     .font(.title)
@@ -29,8 +29,10 @@ struct MainView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
+                
             }
             .navigationTitle("Main Menu")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

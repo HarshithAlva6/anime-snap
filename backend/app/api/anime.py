@@ -1,11 +1,10 @@
 # api/anime.py
 # Router for anime-related endpoints
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from app.models import Anime
 from app.services.jikan_client import BASE_URL
 import requests
-from fastapi import Query
 
 router = APIRouter()
 

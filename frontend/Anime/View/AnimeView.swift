@@ -31,13 +31,28 @@ struct AnimeView: View {
                         .padding()
                 }
                 else {
-                    List(viewModel.topAnime) {anime in
-                        VStack(alignment: .leading) {
-                            Text(anime.title)
-                                .font(.headline)
-                            Text("Score: \(anime.score, specifier: "%.2f")")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                    List(viewModel.topAnime) { anime in
+                        HStack(alignment: .top, spacing: 12) {
+
+                            AsyncImage(url: URL(string: anime.image_url)) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            } placeholder: {
+                                Color.gray.opacity(0.3) // A simple gray box placeholder
+                            }
+                            .frame(width: 60, height: 80)
+                            .cornerRadius(4)
+                            .shadow(radius: 2)
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(anime.title)
+                                    .font(.headline)
+                                Text("Score: \(anime.score, specifier: "%.2f")")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
                         }
                     }
                 }

@@ -32,3 +32,13 @@ class Recommendation(BaseModel):
     entries: list[Entry]
     content: str
     user: dict
+
+class Episode(BaseModel):
+    mal_id: int
+    title: str
+    premium: bool
+    url: str
+
+class WatchEpisodes(BaseModel):
+    entries: list[Entry]
+    episodes: list[Episode]

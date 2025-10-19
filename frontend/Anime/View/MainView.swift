@@ -29,6 +29,15 @@ struct MainView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
+                NavigationLink(destination: WatchView()){
+                    Text("Anime to Watch")
+                        .font(.headline)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        
+                }
                 
             }
             .navigationTitle("Main Menu")

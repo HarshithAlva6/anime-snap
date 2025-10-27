@@ -40,7 +40,9 @@ https://www.hackingwithswift.com/100/swiftui
 
 iOS Architecture -
 MVC is used for simple apps, while MVVM is considered when the app is large and complex.
+
 Core OS - The Core OS layer in iOS is the foundation. This layer includes the kernel, which manages system resources and hardware abstraction, and device drivers that facilitate communication between the OS and hardware. 
+
 Core Service - The Core Services layer in iOS provides essential system services that support app development by offering a wide range of fundamental frameworks and capabilities. 
 Cocoa Touch layer - Provides key frameworks, user interface elements, gestures, animations, and event handling to develop apps. Key components include UIKit for managing the graphical user interface, Foundation for essential data and network access, and Core Motion for handling device motion data. Additionally, frameworks like GameKit, MapKit, MessageUI, EventKit, and AVFoundation extend functionality for gaming, mapping, communication, event management, and multimedia.
 
